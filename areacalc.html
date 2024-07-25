@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Area Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='areacalc.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Area Calculator</h1>
+        <form action="/" method="POST">
+            <label for="shape">Select a shape:</label>
+            <select name="shape" id="shape">
+                <option value="rectangle">Rectangle</option>
+                <option value="circle">Circle</option>
+                <option value="triangle">Triangle</option>
+                <option value="square">Square</option>
+                <option value="parallelogram">Parallelogram</option>
+            </select><br>
+
+            <div id="rectangle">
+                <label for="length">Length:</label>
+                <input type="number" name="length" id="length"><br>
+                <label for="width">Width:</label>
+                <input type="number" name="width" id="width"><br>
+            </div>
+            <div id="circle" class="hidden">
+                <label for="radius">Radius:</label>
+                <input type="number" name="radius" id="radius"><br>
+            </div>
+            <div id="triangle" class="hidden">
+                <label for="base">Base:</label>
+                <input type="number" name="base" id="base"><br>
+                <label for="height">Height:</label>
+                <input type="number" name="height" id="height"><br>
+            </div>
+            <div id="square" class="hidden">
+                <label for="side">Side:</label>
+                <input type="number" name="side" id="side"><br>
+            </div>
+            <div id="parallelogram" class="hidden">
+                <label for="parallelogram_base">Base:</label>
+                <input type="number" name="parallelogram_base" id="parallelogram_base"><br>
+                <label for="parallelogram_height">Height:</label>
+                <input type="number" name="parallelogram_height" id="parallelogram_height"><br>
+            </div>
+            
+            <input type="submit" value="Calculate">
+        </form>
+        
+        {% if area %}
+        <h2>Result</h2>
+        <p>The area is: {{ area }}</p>
+        <h2>Dimensions</h2>
+        <ul>
+            {% for dimension in dimensions %}
+                <li>{{ dimension[0] }}: {{ dimension[1] }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <script>
+        const shapeSelect = document.getElementById('shape');
+        const shapeDivs = document.querySelectorAll('#rectangle, #circle, #triangle, #square, #parallelogram');
+
+        shapeSelect.addEventListener('change', function () {
+            shapeDivs.forEach(div => {
+                div.classList.add('hidden');
+            });
+            const selectedShape = shapeSelect.value;
+            document.getElementById(selectedShape).classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
